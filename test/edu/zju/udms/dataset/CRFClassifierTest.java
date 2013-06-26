@@ -11,7 +11,7 @@ import edu.zju.udms.model.Sentence;
 public class CRFClassifierTest {
 	private MSRADataset dataset = new MSRADataset();
 	private CRFClassifier classifier;
-	private final String file = "F:/语料/msra(命名实体语料)/train.txt";
+	private final String file = "msra/train.txt";
 	@Test
 	public void train() throws IOException{
 		long start = System.currentTimeMillis();
