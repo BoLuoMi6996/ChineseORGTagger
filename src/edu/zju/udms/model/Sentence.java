@@ -3,7 +3,9 @@ package edu.zju.udms.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Sentence {
 	private Token[] tokens; 
@@ -40,5 +42,51 @@ public class Sentence {
 			}
 		}
 		return sum;
+	}
+	
+	public Map<Integer,String> getOrg(){
+		Map<Integer,String> orgs = new HashMap<Integer, String>();
+		StringBuffer buffer = new StringBuffer();
+		int pos = -1;
+		for(int i = 0;i<tokens.length;i++){
+			switch(tokens[i].getTag()){
+			case Other:
+				break;
+			case Begin:
+				pos = i;
+			case Inter:
+				buffer.append(tokens[i].getContent());
+				break;
+			case End:
+				orgs.put(pos,buffer.toString());
+				buffer = new StringBuffer();
+			}
+		}
+		return orgs;
+	}
+	
+	/**
+	 * 
+	 * @return the start position and the organization name.
+	 */
+	public Map<Integer,String> getPredictOrg(){
+		Map<Integer,String> orgs = new HashMap<Integer, String>();
+		StringBuffer buffer = new StringBuffer();
+		int pos = -1;
+		for(int i = 0;i<tokens.length;i++){
+			switch(tokens[i].getPredictTag()){
+			case Other:
+				break;
+			case Begin:
+				pos = i;
+			case Inter:
+				buffer.append(tokens[i].getContent());
+				break;
+			case End:
+				orgs.put(pos,buffer.toString());
+				buffer = new StringBuffer();
+			}
+		}
+		return orgs;
 	}
 }

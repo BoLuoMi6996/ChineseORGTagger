@@ -11,16 +11,21 @@ import edu.zju.udms.model.Sentence;
 public class CRFClassifierTest {
 	private MSRADataset dataset = new MSRADataset();
 	private CRFClassifier classifier;
-	private final String file = "msra/train.txt";
+	private final String trainFile = "msra/train.txt";
+	private final String testFile = "msra/train.txt";
 	@Test
 	public void train() throws IOException{
 		long start = System.currentTimeMillis();
-		List<Sentence> sentences = dataset.getOrgFromFile(file);
+		List<Sentence> sentencesTrain = dataset.getOrgFromFile(trainFile);
 		long end = System.currentTimeMillis();
 		
 		System.out.println("Read Dataset From File Use Time:"+(end-start)/1000.0);
 		
 		classifier = new CRFClassifier();
-		classifier.train(sentences);
+		classifier.train(sentencesTrain);
+		
+		//List<Sentence> sentencesTest = dataset.getOrgFromFile(testFile);
+		classifier.classify(sentencesTrain);
+		classifier.eval(sentencesTrain);
 	}
 }
