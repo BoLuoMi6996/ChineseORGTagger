@@ -7,6 +7,8 @@ public class Token {
 	private String content;
 	private Tag curTag;
 	private Tag preTag = Tag.Other;
+	private Tag predictTag;
+	
 	private String[] features;
 	private int[] featureIds;
 	
@@ -56,6 +58,14 @@ public class Token {
 	}
 	public String getContent(){
 		return this.content;
+	}
+	
+	public void setPredictTag(Tag tag){
+		this.predictTag = tag;
+	}
+	
+	public Tag getPredictTag(){
+		return this.predictTag;
 	}
 	
 	public int getTagclassId(){

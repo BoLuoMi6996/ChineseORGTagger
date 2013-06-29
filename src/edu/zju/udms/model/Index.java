@@ -51,6 +51,7 @@ public class Index {
 	}
 	
 	 public void write(Writer bw) throws IOException {
+		 bw.write(this.indexes.size()+'\n');
 		 for (String key:indexes.keySet()) {
 		    bw.write(key + "=" + get(key) + '\n');
 		 }

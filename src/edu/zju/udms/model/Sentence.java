@@ -31,4 +31,14 @@ public class Sentence {
 		assert(i>=0 && i<this.tokens.length);
 		return this.tokens[i];
 	}
+	
+	public int predictCorrectCount(){
+		int sum = 0;
+		for(int i = 0;i<tokens.length;i++){
+			if(tokens[i].getPredictTag()==tokens[i].getTag()){
+				sum++;
+			}
+		}
+		return sum;
+	}
 }
