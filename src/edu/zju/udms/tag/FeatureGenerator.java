@@ -18,12 +18,13 @@ public class FeatureGenerator {
 		assert (i < slen);
 		features.add("c0=" + sentence.getToken(i).getContent());
 
+		
 		// add bigram features c-1c0
 		if (MathUtils.rangeCheck(i - 1, slen, 0)) {
-			features.add("c1c0=" + sentence.getToken(i - 1).getContent()
+			features.add("c_1c0=" + sentence.getToken(i - 1).getContent()
 					+ sentence.getToken(i).getContent());
 		}else{
-			features.add("c1c0=\t"  
+			features.add("c_1c0=SEN_BEG"  
 					+ sentence.getToken(i).getContent());
 		}
 
@@ -33,10 +34,24 @@ public class FeatureGenerator {
 					+ sentence.getToken(i + 1).getContent());
 		}else{
 			features.add("c0c1=" + sentence.getToken(i).getContent()
-					+"\t");
+					+"SEN_END");
 		}
-
-		/* add trigram features c-2c-1c0
+		
+		// add bigram features c-1c1
+		if (MathUtils.rangeCheck(i - 1, slen, 0) && MathUtils.rangeCheck(i+1, slen, 0)) {
+			features.add("c_1c1=" + sentence.getToken(i-1).getContent()
+					+ sentence.getToken(i+1).getContent());
+		}else if(MathUtils.rangeCheck(i - 1, slen, 0)){
+			features.add("c_1c1=" + sentence.getToken(i-1).getContent()
+					+"SEN_END");
+		}else if(MathUtils.rangeCheck(i+1, slen, 0)){
+			features.add("c_1c1=SEN_BEG" + sentence.getToken(i+1).getContent());
+		}else{
+			features.add("c_1c1=SEN_BEG,SEN_END");
+		}
+		
+		/*
+		//add trigram features c-2c-1c0
 		if (MathUtils.rangeCheck(i - 2, slen, 0)) {
 			features.add("c2c1c0=" + sentence.getToken(i - 1).getContent()
 					+ sentence.getToken(i - 1).getContent() 
@@ -57,6 +72,7 @@ public class FeatureGenerator {
 					+ sentence.getToken(i).getContent());
 		}
 		*/
+		
 		Token ithToken = sentence.getToken(i);
 		ithToken.setFeatures(features);
 	}

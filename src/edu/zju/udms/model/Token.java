@@ -40,11 +40,15 @@ public class Token {
 		this.features = features.toArray(new String[]{});
 	}
 	
+	public String[] getFeatures(){
+		return this.features;
+	}
 	public int[] indexFeatures(Index index){
 		this.featureIds = new int[features.length];
 		int i = 0;
 		for(String f:features){
 			this.featureIds[i] = index.add(f);
+			i++;
 		}
 		return this.featureIds;
 	}
@@ -53,9 +57,17 @@ public class Token {
 		return this.featureIds;
 	}
 	
-	public Tag getTag(){
+	public Tag getCurTag(){
 		return this.curTag;
 	}
+	public Tag getPreTag(){
+		return this.preTag;
+	}
+	
+	public void setPreTag(Tag preTag){
+		this.preTag = preTag;
+	}
+	
 	public String getContent(){
 		return this.content;
 	}
@@ -74,7 +86,7 @@ public class Token {
 	
 	@Override
 	public String toString(){
-		return content+"\t"+curTag+"\t"+preTag+"\n";
+		return content+"\t"+curTag+"\t"+preTag+"\t"+predictTag+"\n";
 	}
 	
 }

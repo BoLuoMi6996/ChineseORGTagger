@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Test;
 
 import edu.zju.udms.algorithm.CRFClassifier;
+import edu.zju.udms.model.NamedEntityType;
 import edu.zju.udms.model.Sentence;
 
 public class CRFClassifierTest {
@@ -16,13 +17,13 @@ public class CRFClassifierTest {
 	@Test
 	public void train() throws IOException{
 		long start = System.currentTimeMillis();
-		List<Sentence> sentencesTrain = dataset.getOrgFromFile(trainFile);
+		List<Sentence> sentencesTrain = dataset.fromFile(trainFile,NamedEntityType.Organization,true);
 		long end = System.currentTimeMillis();
 		
 		System.out.println("Read Dataset From File Use Time:"+(end-start)/1000.0);
 		
 		classifier = new CRFClassifier();
-		classifier.train(sentencesTrain);
+		classifier.train(sentencesTrain,true);
 		
 		//List<Sentence> sentencesTest = dataset.getOrgFromFile(testFile);
 		classifier.classify(sentencesTrain);

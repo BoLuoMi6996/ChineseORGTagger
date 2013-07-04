@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,11 +15,14 @@ import java.util.Map;
 
 public class Index {
 	private Map<String,Integer> indexes = new HashMap<String,Integer>();
+	private List<String> dict = new ArrayList<String>();
+	
 	public int add(String t){
 		Integer id = indexes.get(t);
 		if(id==null){
 			id = indexes.size();
 			indexes.put(t, id);
+			dict.add(t);
 		}
 		return id;
 	}
@@ -43,6 +47,10 @@ public class Index {
 		Integer id = this.indexes.get(t);
 		if(id==null) return -1;
 		return id;
+	}
+	
+	public String get(int index){
+		return this.dict.get(index);
 	}
 	
 	public void write(String file) throws IOException{

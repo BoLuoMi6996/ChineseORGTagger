@@ -22,6 +22,16 @@ public class Sentence {
 			this.tokens[i] = new Token(tokens[i]);
 		}
 	}
+	@Override
+	public String toString(){
+		StringBuffer buffer = new StringBuffer();
+		for(int i = 0;i<tokens.length;i++){
+			if(tokens[i].getCurTag()==Tag.Begin) buffer.append(" ");
+			buffer.append(tokens[i].getContent());
+			if(tokens[i].getCurTag()==Tag.End) buffer.append(" ");
+		}
+		return buffer.toString();
+	}
 	
 	public int size(){
 		if(this.tokens!=null){
@@ -37,7 +47,7 @@ public class Sentence {
 	public int predictCorrectCount(){
 		int sum = 0;
 		for(int i = 0;i<tokens.length;i++){
-			if(tokens[i].getPredictTag()==tokens[i].getTag()){
+			if(tokens[i].getPredictTag()==tokens[i].getCurTag()){
 				sum++;
 			}
 		}
@@ -49,7 +59,7 @@ public class Sentence {
 		StringBuffer buffer = new StringBuffer();
 		int pos = -1;
 		for(int i = 0;i<tokens.length;i++){
-			switch(tokens[i].getTag()){
+			switch(tokens[i].getCurTag()){
 			case Other:
 				break;
 			case Begin:
@@ -58,6 +68,7 @@ public class Sentence {
 				buffer.append(tokens[i].getContent());
 				break;
 			case End:
+				buffer.append(tokens[i].getContent());
 				orgs.put(pos,buffer.toString());
 				buffer = new StringBuffer();
 			}
